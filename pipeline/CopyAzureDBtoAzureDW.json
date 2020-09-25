@@ -1,0 +1,569 @@
+{
+	"name": "CopyAzureDBtoAzureDW",
+	"properties": {
+		"activities": [
+			{
+				"name": "ForEach_won",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.cw_items",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Copy_won",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [
+								{
+									"name": "Source",
+									"value": "SalesLT.@{item().source.table}"
+								},
+								{
+									"name": "Destination",
+									"value": "SalesLT.@{item().destination.table}"
+								}
+							],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"partitionOption": "None"
+								},
+								"sink": {
+									"type": "SqlDWSink",
+									"allowPolyBase": true,
+									"polyBaseSettings": {
+										"rejectValue": 0,
+										"rejectType": "value",
+										"useTypeDefault": false
+									},
+									"tableOption": "autoCreate"
+								},
+								"enableStaging": true,
+								"stagingSettings": {
+									"linkedServiceName": {
+										"referenceName": "linkedServiceBlob",
+										"type": "LinkedServiceReference"
+									},
+									"path": "output"
+								},
+								"translator": {
+									"value": "@item().copyActivity.translator",
+									"type": "Expression"
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "SourceDataset_won",
+									"type": "DatasetReference",
+									"parameters": {
+										"cw_table": "@item().source.table"
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DestinationDataset_won",
+									"type": "DatasetReference",
+									"parameters": {
+										"cw_table": "@item().destination.table"
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"cw_items": {
+				"type": "Array",
+				"defaultValue": [
+					{
+						"source": {
+							"table": "Customer"
+						},
+						"destination": {
+							"table": "Customer"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "CustomerID",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "CustomerID",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "NameStyle",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "NameStyle",
+											"type": "Boolean"
+										}
+									},
+									{
+										"source": {
+											"name": "Title",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Title",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FirstName",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FirstName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "MiddleName",
+											"type": "String"
+										},
+										"sink": {
+											"name": "MiddleName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LastName",
+											"type": "String"
+										},
+										"sink": {
+											"name": "LastName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Suffix",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Suffix",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CompanyName",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CompanyName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "SalesPerson",
+											"type": "String"
+										},
+										"sink": {
+											"name": "SalesPerson",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "EmailAddress",
+											"type": "String"
+										},
+										"sink": {
+											"name": "EmailAddress",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Phone",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Phone",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "PasswordHash",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PasswordHash",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "PasswordSalt",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PasswordSalt",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "rowguid",
+											"type": "Guid"
+										},
+										"sink": {
+											"name": "rowguid",
+											"type": "Guid"
+										}
+									},
+									{
+										"source": {
+											"name": "ModifiedDate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "ModifiedDate",
+											"type": "DateTime"
+										}
+									}
+								]
+							}
+						}
+					},
+					{
+						"source": {
+							"table": "Product"
+						},
+						"destination": {
+							"table": "Product"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "ProductID",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "ProductID",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "Name",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Name",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ProductNumber",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ProductNumber",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Color",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Color",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "StandardCost",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "StandardCost",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "ListPrice",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "ListPrice",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Size",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Size",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Weight",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Weight",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "ProductCategoryID",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "ProductCategoryID",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "ProductModelID",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "ProductModelID",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "SellStartDate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "SellStartDate",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "SellEndDate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "SellEndDate",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "DiscontinuedDate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "DiscontinuedDate",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "ThumbNailPhoto",
+											"type": "Byte[]"
+										},
+										"sink": {
+											"name": "ThumbNailPhoto",
+											"type": "Byte[]"
+										}
+									},
+									{
+										"source": {
+											"name": "ThumbnailPhotoFileName",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ThumbnailPhotoFileName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "rowguid",
+											"type": "Guid"
+										},
+										"sink": {
+											"name": "rowguid",
+											"type": "Guid"
+										}
+									},
+									{
+										"source": {
+											"name": "ModifiedDate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "ModifiedDate",
+											"type": "DateTime"
+										}
+									}
+								]
+							}
+						}
+					},
+					{
+						"source": {
+							"table": "ProductCategory"
+						},
+						"destination": {
+							"table": "ProductCategory"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "ProductCategoryID",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "ProductCategoryID",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "ParentProductCategoryID",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "ParentProductCategoryID",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "Name",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Name",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "rowguid",
+											"type": "Guid"
+										},
+										"sink": {
+											"name": "rowguid",
+											"type": "Guid"
+										}
+									},
+									{
+										"source": {
+											"name": "ModifiedDate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "ModifiedDate",
+											"type": "DateTime"
+										}
+									}
+								]
+							}
+						}
+					},
+					{
+						"source": {
+							"table": "ProductDescription"
+						},
+						"destination": {
+							"table": "ProductDescription"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "ProductDescriptionID",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "ProductDescriptionID",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "Description",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Description",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "rowguid",
+											"type": "Guid"
+										},
+										"sink": {
+											"name": "rowguid",
+											"type": "Guid"
+										}
+									},
+									{
+										"source": {
+											"name": "ModifiedDate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "ModifiedDate",
+											"type": "DateTime"
+										}
+									}
+								]
+							}
+						}
+					}
+				]
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2020-09-24T11:11:34Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

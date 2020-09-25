@@ -1,0 +1,36 @@
+{
+	"name": "DestinationDataset_vzf",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SqlServerConn",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "Id",
+				"type": "int",
+				"precision": 10,
+				"scale": 0
+			},
+			{
+				"name": "FN",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "LN",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Emp"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

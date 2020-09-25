@@ -1,0 +1,27 @@
+{
+	"name": "DelimitedTextDS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "linkedServiceBlob",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@concat('sales_',item().Category,'.txt')",
+					"type": "Expression"
+				},
+				"container": "output"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
