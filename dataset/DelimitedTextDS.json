@@ -2,7 +2,7 @@
 	"name": "DelimitedTextDS",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "linkedServiceBlob",
+			"referenceName": "AzureBlobStorageConn",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
@@ -14,11 +14,10 @@
 					"value": "@concat('sales_',item().Category,'.txt')",
 					"type": "Expression"
 				},
-				"container": "output"
+				"container": "data"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
-			"firstRowAsHeader": true,
 			"quoteChar": "\""
 		},
 		"schema": []

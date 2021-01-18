@@ -5,12 +5,12 @@
 		"annotations": [],
 		"type": "SqlServer",
 		"typeProperties": {
-			"connectionString": "integrated security=True;data source=.;initial catalog=AdventureWorks2012",
+			"connectionString": "integrated security=True;data source=localhost;initial catalog=AdventureWorks2012",
 			"userName": "rahulsharmarahul18@gmail.com",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI0ODA3YmEyNS0zNDBiLTRiNzAtYjBjMi03NTUyYmEwMWNjZDQiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJmMDdlZjhiNC04MzgxLTQ4Y2QtYjIxMi05ZWYwNzIwN2U1NjAiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"connectVia": {
-			"referenceName": "integrationRuntimeONPrem",
+			"referenceName": "integrationRuntimeonPrem",
 			"type": "IntegrationRuntimeReference"
 		}
 	}
